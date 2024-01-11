@@ -1,0 +1,58 @@
+openapi: "3.1.0"
+info:
+  title: API - Soccer training
+  version: "1.0"
+
+paths:
+  /api/training:
+    post:
+      description: Almacenar la información de un entrenamiento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                week:
+                  type: string
+                  description: Semana a la cual se guardará la información [año] + [número de la semana]
+                infoPlayers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      player:
+                        type: string
+                        description: Nombre del jugador
+                      power:
+                        type: integer
+                        description: Nivel de poder del jugador
+                      speed:
+                        type: integer
+                        description: Nivel de velocidad del jugador
+                      passes:
+                        type: integer
+                        description: Número de pases del jugador
+                  description: Información general de los jugadores
+      responses:
+        200:
+          description: Respuesta exitosa
+
+  /api/team/:week/:players:
+    get:
+      description: Obtener el equipo titular
+      parameters:
+        - name: week
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: players
+          in: path
+          required: null
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Respuesta exitosa

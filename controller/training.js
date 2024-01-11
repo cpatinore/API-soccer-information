@@ -18,7 +18,7 @@ async function addTraining(req, res) {
       }
       await client.query(
         "INSERT INTO training(week, performance, player) VALUES ($1, $2, $3)",
-        [req.body.week, id.rows[0].id, index + 1]
+        [req.body.week, id.rows[0].id, data[index].player]
       );
     }
     return res.json({ message: "La información ha sido guardada con exito." });
@@ -31,35 +31,6 @@ async function addTraining(req, res) {
   }
 }
 
-async function getMainTeam(req, res) {
-  try {
-    const week = req.params.week;
-    const search = await client.query(
-      `SELECT MAX(training) FROM (
-        SELECT COUNT(week) training FROM training WHERE week = $1 GROUP BY player
-        ) training_info`,
-      [week]
-    );
-
-    if (search.rows[0].max == 3) {
-      let result = await client.query(
-        `SELECT 'Jugador' || player::integer AS Player, sum(power) * 0.2 + sum(speed) * 0.3 + sum(passes) * 0.5 as score 
-        FROM training INNER JOIN player_performance as play ON performance = play.id WHERE week = $1 
-        GROUP BY player ORDER BY score DESC LIMIT 5`,
-        [week]
-      );
-      return res.json(result.rows);
-    } else return res.json({ message: "No hay suficiente información." });
-  } catch (error) {
-    console.log(error.message);
-    return {
-      message:
-        "Ocurrio un error al momento de consultar la información. Por favor valida la información ingresada",
-    };
-  }
-}
-
 module.exports = {
-  getMainTeam,
   addTraining,
 };
