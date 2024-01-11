@@ -1,0 +1,10 @@
+services:
+
+  # A Docker web service
+  - type: web
+    name: soccer-trainint
+    env: docker
+    repo: https://github.com/cpatinore/API-soccer-information.git
+    plan: free
+    branch: main
+    rootDir: soccer-trainint
