@@ -32,14 +32,10 @@ app.use((req, res, next) => {
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
-  res.send("¡Hola, mundo!");
+  res.send("<h1>Soccer training</h1>");
 });
 
 app.use("/api/training", require("./routes/training"));
 app.use("/api/team", require("./routes/team"));
 
-app.listen(app.get("port"), () => {
-  console.log(
-    `La aplicación está escuchando en http://localhost:${app.get("port")}`
-  );
-});
+module.exports = app;
