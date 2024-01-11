@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const { getMainTeam } = require("../controller/training");
+const { getMainTeam, addTraining } = require("../controller/training");
 
-router.get("/", getMainTeam);
+router.get("/:week", getMainTeam);
+router.post("/", addTraining);
 
 module.exports = router;
