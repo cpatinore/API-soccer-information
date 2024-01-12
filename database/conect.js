@@ -14,11 +14,14 @@ const connectionData = {
 
 const client = new Client(connectionData);
 
+/**
+ * Connect to the PostgreSQL database using the provided client.
+ */
 async function connectDB() {
   try {
     await client.connect();
   } catch (error) {
-    console.error('Error al conectar a PostgreSQL:', error.message);
+    console.error("Error al conectar a PostgreSQL:", error.message);
     throw error;
   }
 }
@@ -26,5 +29,5 @@ async function connectDB() {
 connectDB();
 
 module.exports = {
-  client
+  client,
 };

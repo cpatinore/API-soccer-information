@@ -27,7 +27,7 @@ paths:
                         description: Nombre del jugador
                       power:
                         type: integer
-                        description: Nivel de poder del jugador
+                        description: Nivel de potencia del jugador
                       speed:
                         type: integer
                         description: Nivel de velocidad del jugador
@@ -45,12 +45,14 @@ paths:
       parameters:
         - name: week
           in: path
+          description: Semana a la cual se va a consultar
           required: true
           schema:
             type: string
         - name: players
           in: path
           required: false
+          description: Número de jugadores que conformaran el equipo titular
           schema:
             type: integer
       responses:

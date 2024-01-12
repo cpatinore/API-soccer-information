@@ -1,5 +1,13 @@
 const { client } = require("../database/conect");
 
+/**
+ * Adds training information for players to the database.
+ *
+ * @param req - Object of request
+ * @param res - Object of response
+ * @returns - JSON Object
+ */
+
 async function addTraining(req, res) {
   try {
     const data = req.body.infoPlayers;
@@ -16,14 +24,17 @@ async function addTraining(req, res) {
           values
         );
       }
+
       await client.query(
         "INSERT INTO training(week, performance, player) VALUES ($1, $2, $3)",
         [req.body.week, id.rows[0].id, data[index].player]
       );
     }
-    return res.json({ message: "La información ha sido guardada con exito." });
+    return res
+      .status(200)
+      .json({ message: "La información ha sido guardada con exito." });
   } catch (error) {
-    console.log(error.message);
+    console.error(error.message);
     return res.status(500).json({
       message:
         "No ha sido posible guardar la información. Por favor, revise los datos.",
